@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+	<head>
+		<title>Staffing and Ops - Employees</title>
+		<meta charset="utf=8"/>
+		
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="https://bootswatch.com/united/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker3.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+    <body ng-controller="EmployeeController">
+    	<nav header></nav>
+    	
+    	<div class='container'>
+			<h1>Employees</h1>
+    	</div>
+    	
+    	<div class="container"><div class="row">
+    		<nav class='col-md-2'>
+    			<ul employee-nav></ul>
+    		</nav>
+    		<div class='col-md-10'>
+				<div ng-show="isEditing">
+					<form name="employeeForm" class="form-horizontal">
+						<div class="form-group">
+							<label name="firstName" class='control-label col-sm-2'>First Name</label>
+							<div class='col-sm-10'>
+								<input type="text" class="form-control" name="firstName" ng-model="employee.firstName" />
+							</div>
+						</div>
+				
+						<div class="form-group">
+							<label name="lastName" class='control-label col-sm-2'>Last Name</label>
+							<div class='col-sm-10'>
+								<input type="text" class="form-control" name="lastName" ng-model="employee.lastName" />
+							</div>
+						</div>
+				
+						<div class='form-group'>
+							<label name="email" class='control-label col-sm-2'>Email</label>
+							<div class='col-sm-10'>
+								<input type='text' class='form-control' name='email' ng-model='employee.email' />
+							</div>
+						</div>
+				
+						<div class='form-group'>
+							<label name="phone" class='control-label col-sm-2'>Phone</label>
+							<div class='col-sm-10'>
+								<input type='text' class='form-control' name='phone' ng-model='employee.phoneNumber' />
+							</div>
+						</div>
+				
+						<div class="form-group">
+							<label class='control-label col-sm-2'>Date of Birth</label>
+							<div class='col-sm-3'>
+								<select class='form-control' ng-options="mo.number as mo.name for mo in monthChoices" ng-model="employee.dob.month"></select>
+							</div>
+							<div class='col-sm-2'>
+								<select class='form-control' ng-options="day for day in dayChoices" ng-model="employee.dob.day"></select>
+							</div>
+							<div class='col-sm-5'>
+								<input type="text" class="form-control" name="year" ng-model="employee.dob.year" />
+							</div>
+						</div>
+
+						<fieldset>
+							<legend>Address</legend>				
+							<div class='form-group'>
+								<label name="street" class='control-label col-sm-2'>Street Address</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='street' ng-model='employee.address.street' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="suite" class='control-label col-sm-2'>Apt./Suite #</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='suite' ng-model='employee.address.suite' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="city" class='control-label col-sm-2'>City</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='city' ng-model='employee.address.city' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="state" class='control-label col-sm-2'>State</label>
+								<div class='col-sm-10'>
+									<select name='state' class='form-control' ng-options="state.abbreviation as state.name for state in stateChoices" ng-model="employee.address.state"></select>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="zipCode" class='control-label col-sm-2'>Zip Code</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='zipCode' ng-model='employee.address.zipCode' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="neighborhood" class='control-label col-sm-2'>Neighborhood</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='neighborhood' ng-model='employee.address.neighborhood' />
+								</div>
+							</div>
+						</fieldset>
+				
+						<fieldset>
+							<legend>Uniform</legend>
+							<div class='form-group'>
+								<label name="shirtType" class='control-label col-sm-2'>Shirt Type</label>
+								<div class='col-sm-10'>
+									<select name='shirtType' class='form-control' ng-options="type for type in ['Men\'s', 'Women\'s']" ng-model="employee.attire.shirtType"></select>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="shirtSize" class='control-label col-sm-2'>Shirt Size</label>
+								<div class='col-sm-10'>
+									<select name='shirtSize' class='form-control' ng-options="size for size in sizes" ng-model="employee.attire.shirtSize"></select>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="hatSize" class='control-label col-sm-2'>Hat Size</label>
+								<div class='col-sm-10'>
+									<select name='hatSize' class='form-control' ng-options="size for size in sizes" ng-model="employee.attire.hatSize"></select>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="chefCoatSize" class='control-label col-sm-2'>Chef Coat Size</label>
+								<div class='col-sm-10'>
+									<select name='chefCoatSize' class='form-control' ng-options="size for size in sizes" ng-model="employee.attire.chefCoatSize"></select>
+								</div>
+							</div>
+						</fieldset>
+				
+						<fieldset>
+							<legend>Key Dates</legend>
+					
+							<div class="form-group">
+								<label class='control-label col-sm-2'>Hire Date</label>
+								<div class='col-sm-10'>
+									<input type="text" class="form-control" ng-model='employee.hireDate' placeholder='MM/DD/YYYY' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="orientationDate" class='control-label col-sm-2'>Orientation Date</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='orientationDate' ng-model='employee.orientationDate' placeholder='MM/DD/YYYY'  />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="firstShiftDate" class='control-label col-sm-2'>First Shift Date</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='firstShiftDate' ng-model='employee.firstShiftDate' placeholder='MM/DD/YYYY'  />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="deactivationDate" class='control-label col-sm-2'>Deactivation Date</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='deactivationDate' ng-model='employee.deactivationDate' placeholder='MM/DD/YYYY'  />
+								</div>
+							</div>
+						</fieldset>
+				
+						<fieldset>
+							<legend>Work Details</legend>
+					
+							<div class='form-group'>
+								<label name="supervisor" class='control-label col-sm-2'>Supervisor</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='supervisor' ng-model='employee.supervisor' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="department" class='control-label col-sm-2'>Department</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='department' ng-model='employee.department' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name="workerType" class='control-label col-sm-2'>Worker Type</label>
+								<div class='col-sm-10'>
+									<input type='text' class='form-control' name='workerType' ng-model='employee.workerType' />
+								</div>
+							</div>
+						</fieldset>
+				
+						<fieldset>
+							<legend>Documentation</legend>
+					
+							<div class='form-group'>
+								<label name='w4' class='control-label col-sm-2'>W-4</label>
+								<div class='col-sm-10'>
+									<div class="checkbox">
+										<label><input ng-model='employee.documentation.w4.isValid' type="checkbox"> Is Valid?</label>
+									</div>
+								</div>
+								<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+								<div class='col-sm-9'>
+									<textarea name='w4' class='form-control' ng-model='employee.documentation.w4.notes'></textarea>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='i9sectionOne' class='control-label col-sm-2'>I-9 Section 1</label>
+								<div class='col-sm-10'>
+									<div class="checkbox">
+										<label><input ng-model='employee.documentation.i9sectionOne.isValid' type="checkbox"> Is Valid?</label>
+									</div>
+								</div>
+								<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+								<div class='col-sm-9'>
+									<textarea name='i9sectionOne' class='form-control' ng-model='employee.documentation.i9sectionOne.notes'></textarea>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='i9sectionTwo' class='control-label col-sm-2'>I-9 Section 2</label>
+								<div class='col-sm-10'>
+									<div class="checkbox">
+										<label><input ng-model='employee.documentation.i9sectionTwo.isValid' type="checkbox"> Is Valid?</label>
+									</div>
+								</div>
+								<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+								<div class='col-sm-9'>
+									<textarea name='i9sectionTwo' class='form-control' ng-model='employee.documentation.i9sectionTwo.notes'></textarea>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='i9sectionThree' class='control-label col-sm-2'>I-9 Section 3</label>
+								<div class='col-sm-10'>
+									<div class="checkbox">
+										<label><input ng-model='employee.documentation.i9sectionThree.isValid' type="checkbox"> Is Valid?</label>
+									</div>
+								</div>
+								<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+								<div class='col-sm-9'>
+									<textarea name='i9sectionThree' class='form-control' ng-model='employee.documentation.i9sectionThree.notes'></textarea>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='i9listA' class='control-label col-sm-2'>I-9 List A</label>
+								<div class='col-sm-10'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.i9documents.listA.isValid' type='checkbox'> Is Valid?</label>
+									</div>
+								</div>
+								<label name='i9listAtype' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='i9listAtype' ng-model='employee.documentation.i9documents.listA.doctype' />
+								</div>
+								<label name='i9listAexpires' class='control-label col-sm-1'>Expires</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='i9listAexpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.i9documents.listA.expirationDate' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='i9listB' class='control-label col-sm-2'>I-9 List B</label>
+								<div class='col-sm-10'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.i9documents.listB.isValid' type='checkbox'> Is Valid?</label>
+									</div>
+								</div>
+								<label name='i9listBtype' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='i9listBtype' ng-model='employee.documentation.i9documents.listB.doctype' />
+								</div>
+								<label name='i9BlistAexpires' class='control-label col-sm-1'>Expires</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='i9BlistAexpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.i9documents.listB.expirationDate' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='i9listC' class='control-label col-sm-2'>I-9 List C</label>
+								<div class='col-sm-10'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.i9documents.listC.isValid' type='checkbox'> Is Valid?</label>
+									</div>
+								</div>
+								<label name='i9listCtype' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='i9listCtype' ng-model='employee.documentation.i9documents.listC.doctype' />
+								</div>
+								<label name='i9listCexpires' class='control-label col-sm-1'>Expires</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='i9listCexpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.i9documents.listC.expirationDate' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='c3quiz' class='control-label col-sm-2'>C3 Quiz</label>
+								<div class='col-sm-10'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.c3quiz' type='checkbox' /> Is Complete?</label>
+									</div>
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='foodWorkerCard' class='control-label col-sm-2'>Food Worker Card</label>
+					
+								<div class='col-sm-10'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.foodWorkerCard.isValid' type='checkbox'> Is Valid?</label>
+									</div>
+								</div>
+								<label name='foodWorkerExpires' class='control-label col-sm-1 col-sm-offset-2'>Expires</label>
+								<div class='col-sm-4'>
+									<input type='text' class='form-control' name='foodWorkerExpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.foodWorkerCard.expirationDate' />
+								</div>
+							</div>
+					
+							<div class='form-group'>
+								<label name='mastPermit' class='control-label col-sm-2'>Mast 12/13 Permit</label>
+					
+								<div class='col-sm-5'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.mastPermit.isValid' type='checkbox'> Is Valid?</label>
+									</div>
+								</div>
+								<div class='col-sm-5'>
+									<div class='checkbox'>
+										<label><input ng-model='employee.documentation.mastPermit.isTemporary' type='checkbox'> Is Temporary?</label>
+									</div>
+								</div>
+						
+								<label name='mastType' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+								<div class='col-sm-4'>
+									<select class='form-control' name='mastType' ng-options='type for type in ["Mast 12", "Mast 13"]' ng-model='employee.documentation.mastPermit.doctype'></select>
+								</div>
+						
+								<label name='mastExpires' class='control-label col-sm-1'>Expires</label>
+								<div class='col-sm-4'>
+									<input class='form-control' name='mastExpires' type='text' placeholder='MM/DD/YYYY' ng-model='employee.documentation.mastPermit.expirationDate' />
+								</div>
+						
+								<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+								<div class='col-sm-9'>
+									<textarea class='form-control' ng-model='employee.documentation.mastPermit.notes'></textarea>
+								</div>
+							</div>
+						</fieldset>
+			
+						<div class='form-group'>
+							<div class='col-sm-offset-2 col-sm-10'>
+								<button class="btn btn-primary" ng-click='save()'>Save</button>
+								<button class="btn btn-default" ng-click='cancelEdit()'>Cancel</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			
+				<div ng-show="!isEditing">
+					<div class='alert alert-warning' role='alert' ng-show='employees.length === 0'>
+						<strong>Oh no!</strong> There aren't any employees currently in the database.
+						In order to use this page, you will need to add some.
+					</div>
+					
+					<table class="table table-bordered table-condensed" ng-show='employees.length > 0'>
+						<thead>
+							<tr><th>Last Name</th><th>First Name</th><th>Phone #</th><th>Email</th><th>Address</th><th>Edit</th></tr>
+						<thead>
+						<tbody>
+							<tr ng-repeat='emp in employees track by $index'>
+								<td>{{emp.lastName}}</td>
+								<td>{{emp.firstName}}</td>
+								<td>{{emp.phoneNumber}}</td>
+								<td>{{emp.email}}</td>
+								<td>{{emp.address.street}} {{emp.address.suite}}<br />{{emp.address.city}}, {{emp.address.state}} {{emp.address.zipCode}}</td>
+								<td><i ng-click='edit(emp._id)' class='pointer glyphicon glyphicon-pencil'></i></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div></div>
+		<script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment-with-locales.min.js"></script>
+		<script src="/js/bootstrap-datepicker.min.js"></script>
+		<script src="/js/directives.js"></script>
+		<script src="/js/employeeSvc.js"></script>
+		
+		<script type="text/javascript">
+			var app = angular.module('app', ['directives', 'employeeSvc']);
+		
+			app.controller('EmployeeController', ['$scope', 'EmployeeService', function ($scope, EmployeeSvc) {
+				$scope.dayChoices = [];
+				for(var i = 1; i <= 31; i++) { $scope.dayChoices.push(i); }
+			
+				$scope.monthChoices = [
+					{ number : 1, name : "January" },
+					{ number : 2, name : "February" },
+					{ number : 3, name : "March" },
+					{ number : 4, name : "April" },
+					{ number : 5, name : "May" },
+					{ number : 6, name : "June" },
+					{ number : 7, name : "July" },
+					{ number : 8, name : "August" },
+					{ number : 9, name : "September" },
+					{ number : 10, name : "October" },
+					{ number : 11, name : "November" },
+					{ number : 12, name : "December" }
+				];
+				
+				$scope.stateChoices = [
+					{ abbreviation:'AL', name:'Alabama' },
+					{ abbreviation:'AK', name:'Alaska' },
+					{ abbreviation:'AZ', name:'Arizona' },
+					{ abbreviation:'AR', name:'Arkansas' },
+					{ abbreviation:'CA', name:'California' },
+					{ abbreviation:'CO', name:'Colorado' },
+					{ abbreviation:'CT', name:'Connecticut' },
+					{ abbreviation:'DE', name:'Delaware' },
+					{ abbreviation:'FL', name:'Florida' },
+					{ abbreviation:'GA', name:'Georgia' },
+					{ abbreviation:'HI', name:'Hawaii' },
+					{ abbreviation:'ID', name:'Idaho' },
+					{ abbreviation:'IL', name:'Illinois' },
+					{ abbreviation:'IN', name:'Indiana' },
+					{ abbreviation:'IO', name:'Iowa' },
+					{ abbreviation:'KS', name:'Kansas' },
+					{ abbreviation:'KY', name:'Kentucky' },
+					{ abbreviation:'LA', name:'Louisiana' },
+					{ abbreviation:'ME', name:'Maine' },
+					{ abbreviation:'MD', name:'Maryland' },
+					{ abbreviation:'MA', name:'Massachusetts' },
+					{ abbreviation:'MI', name:'Michigan' },
+					{ abbreviation:'MN', name:'Minnesota' },
+					{ abbreviation:'MS', name:'Mississippi' },
+					{ abbreviation:'MO', name:'Missouri' },
+					{ abbreviation:'MT', name:'Montana' },
+					{ abbreviation:'NE', name:'Nebraska' },
+					{ abbreviation:'NV', name:'Nevada' },
+					{ abbreviation:'NH', name:'New Hampshire' },
+					{ abbreviation:'NJ', name:'New Jersey' },
+					{ abbreviation:'NM', name:'New Mexico' },
+					{ abbreviation:'NY', name:'New York' },
+					{ abbreviation:'NC', name:'North Carolina' },
+					{ abbreviation:'ND', name:'North Dakota' },
+					{ abbreviation:'OH', name:'Ohio' },
+					{ abbreviation:'OK', name:'Oklahoma' },
+					{ abbreviation:'OR', name:'Oregon' },
+					{ abbreviation:'PA', name:'Pennsylvania' },
+					{ abbreviation:'RI', name:'Rhode Island' },
+					{ abbreviation:'SC', name:'South Carolina' },
+					{ abbreviation:'SD', name:'South Dakota' },
+					{ abbreviation:'TN', name:'Tennessee' },
+					{ abbreviation:'TX', name:'Texas' },
+					{ abbreviation:'UT', name:'Utah' },
+					{ abbreviation:'VT', name:'Vermont' },
+					{ abbreviation:'VA', name:'Virginia' },
+					{ abbreviation:'WA', name:'Washington' },
+					{ abbreviation:'WV', name:'West Virginia' },
+					{ abbreviation:'WI', name:'Wisconsin' },
+					{ abbreviation:'WY', name:'Wyoming' }
+				];
+			
+				$scope.sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+			
+				$scope.isEditing = false;
+			
+				$scope.employees = [];
+				EmployeeSvc.getEmployees().then(function (employees) {
+					$scope.employees = employees.data;
+					
+					for(var i = 0; i < $scope.employees.length; i++) {
+						EmployeeSvc.formatDates($scope.employees[i]);
+					}
+				}, function (errorMsg) {
+					console.error(errorMsg);
+				});
+			
+				$scope.cancelEdit = function () {
+					$scope.isEditing = false;
+				};
+			
+				$scope.edit = function (employeeId) {
+					$scope.employee = {};
+				
+					for(var i = 0; i < $scope.employees.length; i++) {
+						if($scope.employees[i]._id === employeeId) {
+							$scope.editingEmployeeIdx = i;
+							$scope.employee = jQuery.extend(true, {}, $scope.employees[i]);
+							break;
+						}
+					}
+				
+					$scope.isEditing = true;
+				};
+			
+				$scope.save = function () {
+					EmployeeSvc.saveEmployee($scope.employee).then(function (editedEmployee) {
+						editedEmployee = editedEmployee.data;
+						EmployeeSvc.formatDates(editedEmployee);
+						
+						if($scope.editingEmployeeIdx != null && $scope.employees[$scope.editingEmployeeIdx]._id == editedEmployee._id) {
+							$scope.employees[$scope.editingEmployeeIdx] = editedEmployee;
+						} else {
+							$scope.employees.push(editedEmployee);
+						}
+					}, function (errorMsg) {
+						console.error(errorMsg);
+					});
+				
+					$scope.isEditing = false;
+				};
+			}]);
+		</script>
+    </body>
+</html>
