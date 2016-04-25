@@ -1,0 +1,39 @@
+<div class='container'>
+	<h1>Employees</h1>
+</div>
+
+<div class="container"><div class="row">
+	<nav class='col-md-2'>
+		<div class='panel panel-default'>
+			<div class='panel-body'>
+				<ul class="nav nav-pills nav-stacked">
+					<li role='presentation'><a href='#employees'>Dashboard</a></li>
+					<li role='presentation'><a href='#employeeForm'>New Employee</a></li>
+					<li role='presentation' class='active'><a href='#employeeContactInfo'>Contact Info</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class='col-md-10'>
+		<div class='alert alert-warning' role='alert' ng-show='employees.length === 0'>
+			<strong>Oh no!</strong> There aren't any employees currently in the database.
+			In order to use this page, you will need to add some.
+		</div>
+
+		<table class="table table-bordered table-condensed table-striped" ng-show='employees.length > 0'>
+			<thead>
+				<tr><th>Last Name</th><th>First Name</th><th>Phone #</th><th>Email</th><th>Address</th><th>Edit</th></tr>
+			<thead>
+			<tbody>
+				<tr ng-repeat='emp in employees track by $index'>
+					<td>{{emp.lastName}}</td>
+					<td>{{emp.firstName}}</td>
+					<td>{{emp.phoneNumber}}</td>
+					<td>{{emp.email}}</td>
+					<td>{{emp.address.street}} {{emp.address.suite}}<br />{{emp.address.city}}, {{emp.address.state}} {{emp.address.zipCode}}</td>
+					<td><i ng-click='edit(emp._id)' class='pointer glyphicon glyphicon-pencil'></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div></div>

@@ -1,0 +1,361 @@
+<div class='container'>
+	<h1>Employees</h1>
+</div>
+
+<div class="container"><div class="row">
+	<nav class='col-md-2'>
+		<div class='panel panel-default'>
+			<div class='panel-body'>
+				<ul class="nav nav-pills nav-stacked">
+					<li role='presentation'><a href='#employees'>Dashboard</a></li>
+					<li role='presentation' class='active'><a href='#employeeForm'>New Employee</a></li>
+					<li role='presentation'><a href='#employeeContactInfo'>Contact Info</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class='col-md-10'>
+		<form name="employeeForm" class="form-horizontal">
+			<div class="form-group">
+				<label name="firstName" class='control-label col-sm-2'>First Name</label>
+				<div class='col-sm-10'>
+					<input type="text" class="form-control" name="firstName" ng-model="employee.firstName" />
+				</div>
+			</div>
+	
+			<div class="form-group">
+				<label name="lastName" class='control-label col-sm-2'>Last Name</label>
+				<div class='col-sm-10'>
+					<input type="text" class="form-control" name="lastName" ng-model="employee.lastName" />
+				</div>
+			</div>
+	
+			<div class='form-group'>
+				<label name="email" class='control-label col-sm-2'>Email</label>
+				<div class='col-sm-10'>
+					<input type='text' class='form-control' name='email' ng-model='employee.email' />
+				</div>
+			</div>
+	
+			<div class='form-group'>
+				<label name="phone" class='control-label col-sm-2'>Phone</label>
+				<div class='col-sm-10'>
+					<input type='text' class='form-control' name='phone' ng-model='employee.phoneNumber' />
+				</div>
+			</div>
+	
+			<div class="form-group">
+				<label class='control-label col-sm-2'>Date of Birth</label>
+				<div class='col-sm-3'>
+					<select class='form-control' ng-options="mo.number as mo.name for mo in monthChoices" ng-model="employee.dob.month"></select>
+				</div>
+				<div class='col-sm-2'>
+					<select class='form-control' ng-options="day for day in dayChoices" ng-model="employee.dob.day"></select>
+				</div>
+				<div class='col-sm-5'>
+					<input type="text" class="form-control" name="year" ng-model="employee.dob.year" />
+				</div>
+			</div>
+
+			<fieldset>
+				<legend>Address</legend>				
+				<div class='form-group'>
+					<label name="street" class='control-label col-sm-2'>Street Address</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='street' ng-model='employee.address.street' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="suite" class='control-label col-sm-2'>Apt./Suite #</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='suite' ng-model='employee.address.suite' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="city" class='control-label col-sm-2'>City</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='city' ng-model='employee.address.city' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="state" class='control-label col-sm-2'>State</label>
+					<div class='col-sm-10'>
+						<select name='state' class='form-control' ng-options="state.abbreviation as state.name for state in stateChoices" ng-model="employee.address.state"></select>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="zipCode" class='control-label col-sm-2'>Zip Code</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='zipCode' ng-model='employee.address.zipCode' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="neighborhood" class='control-label col-sm-2'>Neighborhood</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='neighborhood' ng-model='employee.address.neighborhood' />
+					</div>
+				</div>
+			</fieldset>
+	
+			<fieldset>
+				<legend>Uniform</legend>
+				<div class='form-group'>
+					<label name="shirtType" class='control-label col-sm-2'>Shirt Type</label>
+					<div class='col-sm-10'>
+						<select name='shirtType' class='form-control' ng-options="type for type in ['Mens', 'Womens']" ng-model="employee.attire.shirtType"></select>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="shirtSize" class='control-label col-sm-2'>Shirt Size</label>
+					<div class='col-sm-10'>
+						<select name='shirtSize' class='form-control' ng-options="size for size in sizes" ng-model="employee.attire.shirtSize"></select>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="hatSize" class='control-label col-sm-2'>Hat Size</label>
+					<div class='col-sm-10'>
+						<select name='hatSize' class='form-control' ng-options="size for size in sizes" ng-model="employee.attire.hatSize"></select>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="chefCoatSize" class='control-label col-sm-2'>Chef Coat Size</label>
+					<div class='col-sm-10'>
+						<select name='chefCoatSize' class='form-control' ng-options="size for size in sizes" ng-model="employee.attire.chefCoatSize"></select>
+					</div>
+				</div>
+			</fieldset>
+	
+			<fieldset>
+				<legend>Key Dates</legend>
+		
+				<div class="form-group">
+					<label class='control-label col-sm-2'>Hire Date</label>
+					<div class='col-sm-10'>
+						<input type="text" class="form-control" ng-model='employee.hireDate' placeholder='MM/DD/YYYY' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="orientationDate" class='control-label col-sm-2'>Orientation Date</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='orientationDate' ng-model='employee.orientationDate' placeholder='MM/DD/YYYY'  />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="firstShiftDate" class='control-label col-sm-2'>First Shift Date</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='firstShiftDate' ng-model='employee.firstShiftDate' placeholder='MM/DD/YYYY'  />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="deactivationDate" class='control-label col-sm-2'>Deactivation Date</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='deactivationDate' ng-model='employee.deactivationDate' placeholder='MM/DD/YYYY'  />
+					</div>
+				</div>
+			</fieldset>
+	
+			<fieldset>
+				<legend>Work Details</legend>
+		
+				<div class='form-group'>
+					<label name="supervisor" class='control-label col-sm-2'>Supervisor</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='supervisor' ng-model='employee.supervisor' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="department" class='control-label col-sm-2'>Department</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='department' ng-model='employee.department' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name="workerType" class='control-label col-sm-2'>Worker Type</label>
+					<div class='col-sm-10'>
+						<input type='text' class='form-control' name='workerType' ng-model='employee.workerType' />
+					</div>
+				</div>
+			</fieldset>
+	
+			<fieldset>
+				<legend>Documentation</legend>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>W-4</label>
+					<div class='col-sm-10'>
+						<div class="checkbox">
+							<label><input ng-model='employee.documentation.w4.isValid' type="checkbox"> Is Valid?</label>
+						</div>
+					</div>
+					<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+					<div class='col-sm-9'>
+						<textarea name='w4' class='form-control' ng-model='employee.documentation.w4.notes'></textarea>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>I-9 Section 1</label>
+					<div class='col-sm-10'>
+						<div class="checkbox">
+							<label><input ng-model='employee.documentation.i9sectionOne.isValid' type="checkbox"> Is Valid?</label>
+						</div>
+					</div>
+					<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+					<div class='col-sm-9'>
+						<textarea name='i9sectionOne' class='form-control' ng-model='employee.documentation.i9sectionOne.notes'></textarea>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>I-9 Section 2</label>
+					<div class='col-sm-10'>
+						<div class="checkbox">
+							<label><input ng-model='employee.documentation.i9sectionTwo.isValid' type="checkbox"> Is Valid?</label>
+						</div>
+					</div>
+					<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+					<div class='col-sm-9'>
+						<textarea name='i9sectionTwo' class='form-control' ng-model='employee.documentation.i9sectionTwo.notes'></textarea>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>I-9 Section 3</label>
+					<div class='col-sm-10'>
+						<div class="checkbox">
+							<label><input ng-model='employee.documentation.i9sectionThree.isValid' type="checkbox"> Is Valid?</label>
+						</div>
+					</div>
+					<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+					<div class='col-sm-9'>
+						<textarea name='i9sectionThree' class='form-control' ng-model='employee.documentation.i9sectionThree.notes'></textarea>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>I-9 List A</label>
+					<div class='col-sm-10'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.i9documents.listA.isValid' type='checkbox'> Is Valid?</label>
+						</div>
+					</div>
+					<label name='i9listAtype' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='i9listAtype' ng-model='employee.documentation.i9documents.listA.doctype' />
+					</div>
+					<label name='i9listAexpires' class='control-label col-sm-1'>Expires</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='i9listAexpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.i9documents.listA.expirationDate' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>I-9 List B</label>
+					<div class='col-sm-10'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.i9documents.listB.isValid' type='checkbox'> Is Valid?</label>
+						</div>
+					</div>
+					<label name='i9listBtype' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='i9listBtype' ng-model='employee.documentation.i9documents.listB.doctype' />
+					</div>
+					<label name='i9BlistAexpires' class='control-label col-sm-1'>Expires</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='i9BlistAexpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.i9documents.listB.expirationDate' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>I-9 List C</label>
+					<div class='col-sm-10'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.i9documents.listC.isValid' type='checkbox'> Is Valid?</label>
+						</div>
+					</div>
+					<label name='i9listCtype' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='i9listCtype' ng-model='employee.documentation.i9documents.listC.doctype' />
+					</div>
+					<label name='i9listCexpires' class='control-label col-sm-1'>Expires</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='i9listCexpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.i9documents.listC.expirationDate' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name='c3quiz' class='control-label col-sm-2'>C3 Quiz</label>
+					<div class='col-sm-10'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.c3quiz' type='checkbox' /> Is Complete?</label>
+						</div>
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label name='foodWorkerCard' class='control-label col-sm-2'>Food Worker Card</label>
+		
+					<div class='col-sm-10'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.foodWorkerCard.isValid' type='checkbox'> Is Valid?</label>
+						</div>
+					</div>
+					<label name='foodWorkerExpires' class='control-label col-sm-1 col-sm-offset-2'>Expires</label>
+					<div class='col-sm-4'>
+						<input type='text' class='form-control' name='foodWorkerExpires' placeholder='MM/DD/YYYY' ng-model='employee.documentation.foodWorkerCard.expirationDate' />
+					</div>
+				</div>
+		
+				<div class='form-group'>
+					<label class='control-label col-sm-2'>MAST 12/13 Permit</label>
+		
+					<div class='col-sm-5'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.mastPermit.isValid' type='checkbox'> Is Valid?</label>
+						</div>
+					</div>
+					<div class='col-sm-5'>
+						<div class='checkbox'>
+							<label><input ng-model='employee.documentation.mastPermit.isTemporary' type='checkbox'> Is Temporary?</label>
+						</div>
+					</div>
+			
+					<label name='mastType' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
+					<div class='col-sm-4'>
+						<select class='form-control' name='mastType' ng-options='type for type in ["Class 12", "Class 13"]' ng-model='employee.documentation.mastPermit.doctype'></select>
+					</div>
+			
+					<label name='mastExpires' class='control-label col-sm-1'>Expires</label>
+					<div class='col-sm-4'>
+						<input class='form-control' name='mastExpires' type='text' placeholder='MM/DD/YYYY' ng-model='employee.documentation.mastPermit.expirationDate' />
+					</div>
+			
+					<label class='control-label col-sm-offset-2 col-sm-1'>Notes</label>
+					<div class='col-sm-9'>
+						<textarea class='form-control' ng-model='employee.documentation.mastPermit.notes'></textarea>
+					</div>
+				</div>
+			</fieldset>
+
+			<div class='form-group'>
+				<div class='col-sm-offset-2 col-sm-10'>
+					<button class="btn btn-primary" ng-click='save()'>Save</button>
+					<button class="btn btn-default" ng-click='cancelEdit()'>Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div></div>

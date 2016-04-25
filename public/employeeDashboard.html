@@ -1,0 +1,32 @@
+<div class='container'>
+	<h1>Employees</h1>
+</div>
+
+<div class="container"><div class="row">
+	<nav class='col-md-2'>
+		<div class='panel panel-default'>
+			<div class='panel-body'>
+				<ul class="nav nav-pills nav-stacked">
+					<li role='presentation' class='active'><a href='#employees'>Dashboard</a></li>
+					<li role='presentation'><a href='#employeeForm'>New Employee</a></li>
+					<li role='presentation'><a href='#employeeContactInfo'>Contact Info</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class='col-md-10'>
+		<div class='panel panel-primary'>
+			<div class='panel-heading'>
+				<h3 class='panel-title'>Upcoming Birthdays</h3>
+			</div>
+			
+			<div class='panel-body'>
+				<ul>
+					<li ng-repeat='emp in upcomingBirthdays | orderBy:"daysLeft" track by emp._id'>
+						<span ng-class="{'label' : emp.daysLeft == 0, 'label-info' : emp.daysLeft == 0}">{{('0' + emp.dob.month).slice(-2)}}/{{('0' + emp.dob.day).slice(-2)}} -- {{emp.firstName}} {{emp.lastName}}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div></div>

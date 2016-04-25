@@ -121,7 +121,7 @@
 							<div class='form-group'>
 								<label name="shirtType" class='control-label col-sm-2'>Shirt Type</label>
 								<div class='col-sm-10'>
-									<select name='shirtType' class='form-control' ng-options="type for type in ['Men\'s', 'Women\'s']" ng-model="employee.attire.shirtType"></select>
+									<select name='shirtType' class='form-control' ng-options="type for type in ['Mens', 'Womens']" ng-model="employee.attire.shirtType"></select>
 								</div>
 							</div>
 					
@@ -208,7 +208,7 @@
 							<legend>Documentation</legend>
 					
 							<div class='form-group'>
-								<label name='w4' class='control-label col-sm-2'>W-4</label>
+								<label class='control-label col-sm-2'>W-4</label>
 								<div class='col-sm-10'>
 									<div class="checkbox">
 										<label><input ng-model='employee.documentation.w4.isValid' type="checkbox"> Is Valid?</label>
@@ -221,7 +221,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='i9sectionOne' class='control-label col-sm-2'>I-9 Section 1</label>
+								<label class='control-label col-sm-2'>I-9 Section 1</label>
 								<div class='col-sm-10'>
 									<div class="checkbox">
 										<label><input ng-model='employee.documentation.i9sectionOne.isValid' type="checkbox"> Is Valid?</label>
@@ -234,7 +234,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='i9sectionTwo' class='control-label col-sm-2'>I-9 Section 2</label>
+								<label class='control-label col-sm-2'>I-9 Section 2</label>
 								<div class='col-sm-10'>
 									<div class="checkbox">
 										<label><input ng-model='employee.documentation.i9sectionTwo.isValid' type="checkbox"> Is Valid?</label>
@@ -247,7 +247,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='i9sectionThree' class='control-label col-sm-2'>I-9 Section 3</label>
+								<label class='control-label col-sm-2'>I-9 Section 3</label>
 								<div class='col-sm-10'>
 									<div class="checkbox">
 										<label><input ng-model='employee.documentation.i9sectionThree.isValid' type="checkbox"> Is Valid?</label>
@@ -260,7 +260,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='i9listA' class='control-label col-sm-2'>I-9 List A</label>
+								<label class='control-label col-sm-2'>I-9 List A</label>
 								<div class='col-sm-10'>
 									<div class='checkbox'>
 										<label><input ng-model='employee.documentation.i9documents.listA.isValid' type='checkbox'> Is Valid?</label>
@@ -277,7 +277,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='i9listB' class='control-label col-sm-2'>I-9 List B</label>
+								<label class='control-label col-sm-2'>I-9 List B</label>
 								<div class='col-sm-10'>
 									<div class='checkbox'>
 										<label><input ng-model='employee.documentation.i9documents.listB.isValid' type='checkbox'> Is Valid?</label>
@@ -294,7 +294,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='i9listC' class='control-label col-sm-2'>I-9 List C</label>
+								<label class='control-label col-sm-2'>I-9 List C</label>
 								<div class='col-sm-10'>
 									<div class='checkbox'>
 										<label><input ng-model='employee.documentation.i9documents.listC.isValid' type='checkbox'> Is Valid?</label>
@@ -334,7 +334,7 @@
 							</div>
 					
 							<div class='form-group'>
-								<label name='mastPermit' class='control-label col-sm-2'>Mast 12/13 Permit</label>
+								<label class='control-label col-sm-2'>MAST 12/13 Permit</label>
 					
 								<div class='col-sm-5'>
 									<div class='checkbox'>
@@ -349,7 +349,7 @@
 						
 								<label name='mastType' class='control-label col-sm-1 col-sm-offset-2'>Type</label>
 								<div class='col-sm-4'>
-									<select class='form-control' name='mastType' ng-options='type for type in ["Mast 12", "Mast 13"]' ng-model='employee.documentation.mastPermit.doctype'></select>
+									<select class='form-control' name='mastType' ng-options='type for type in ["Class 12", "Class 13"]' ng-model='employee.documentation.mastPermit.doctype'></select>
 								</div>
 						
 								<label name='mastExpires' class='control-label col-sm-1'>Expires</label>
@@ -374,26 +374,7 @@
 				</div>
 			
 				<div ng-show="!isEditing">
-					<div class='alert alert-warning' role='alert' ng-show='employees.length === 0'>
-						<strong>Oh no!</strong> There aren't any employees currently in the database.
-						In order to use this page, you will need to add some.
-					</div>
 					
-					<table class="table table-bordered table-condensed" ng-show='employees.length > 0'>
-						<thead>
-							<tr><th>Last Name</th><th>First Name</th><th>Phone #</th><th>Email</th><th>Address</th><th>Edit</th></tr>
-						<thead>
-						<tbody>
-							<tr ng-repeat='emp in employees track by $index'>
-								<td>{{emp.lastName}}</td>
-								<td>{{emp.firstName}}</td>
-								<td>{{emp.phoneNumber}}</td>
-								<td>{{emp.email}}</td>
-								<td>{{emp.address.street}} {{emp.address.suite}}<br />{{emp.address.city}}, {{emp.address.state}} {{emp.address.zipCode}}</td>
-								<td><i ng-click='edit(emp._id)' class='pointer glyphicon glyphicon-pencil'></i></td>
-							</tr>
-						</tbody>
-					</table>
 				</div>
 			</div>
 		</div></div>
@@ -480,20 +461,11 @@
 					{ abbreviation:'WY', name:'Wyoming' }
 				];
 			
-				$scope.sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+				$scope.sizes = ['X-Small', 'Small', 'Medium', 'Large', 'X-Large', 'XX-Large'];
 			
 				$scope.isEditing = false;
 			
-				$scope.employees = [];
-				EmployeeSvc.getEmployees().then(function (employees) {
-					$scope.employees = employees.data;
-					
-					for(var i = 0; i < $scope.employees.length; i++) {
-						EmployeeSvc.formatDates($scope.employees[i]);
-					}
-				}, function (errorMsg) {
-					console.error(errorMsg);
-				});
+				
 			
 				$scope.cancelEdit = function () {
 					$scope.isEditing = false;

@@ -1,23 +1,40 @@
 var module = angular.module('employeeSvc', []);
 
 module.service('EmployeeService', ['$http', function ($http) {
-	this.saveEmployee = function (employee) {
+	var svc = this;
+	svc.saveEmployee = function (employee) {
 		if(employee._id == null) {
 			return $http.post('/api/employees', employee);
 		} else {
 			return $http.put('/api/employees/' + employee._id, employee);
 		}
 	};
+	
+	(function () {
+		var employee = {};
+		
+		svc.getEditingEmployee = function () {
+			return employee;
+		};
+		
+		svc.setEditingEmployee = function (_employee) {
+			employee = _employee;
+		};
+	}());
 
-	this.getEmployees = function () {
+	svc.getEmployees = function () {
 		return $http.get('/api/employees');
+	};
+	
+	svc.getUpcomingBirthdays = function () {
+		return $http.get('/api/employees/birthdays');
 	};
 	
 	/**
 	 * Formats all the dates in the given employee object
 	 * to the date format 'MM/DD/YYYY'
 	 */
-	this.formatDates = function (employee) {
+	svc.formatDates = function (employee) {
 		var dateAttrs = ['hireDate', 'orientationDate', 'firstShiftDate',
 			'deactivationDate', 'documentation.i9documents.listA.expirationDate',
 			'documentation.i9documents.listB.expirationDate',
