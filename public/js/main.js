@@ -17,6 +17,19 @@ staffingApp.config(function($routeProvider) {
 });
 
 staffingApp.controller('EmployeeController', ['$scope', '$window', 'EmployeeService', function($scope, $window, EmployeeSvc) {
+	$scope.sortField = 'lastName';
+	$scope.sortReverse = false;
+	
+	$scope.sort = function (newSortField) {
+		if($scope.sortField === newSortField) {
+			$scope.sortReverse = !$scope.sortReverse;
+		} else {
+			$scope.sortReverse = false;
+		}
+		
+		$scope.sortField = newSortField
+	}
+	
 	$scope.employee = EmployeeSvc.getEditingEmployee();
 	$scope.employees = [];
 	EmployeeSvc.getEmployees().then(function (employees) {

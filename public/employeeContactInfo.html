@@ -22,10 +22,23 @@
 
 		<table class="table table-bordered table-condensed table-striped" ng-show='employees.length > 0'>
 			<thead>
-				<tr><th>Last Name</th><th>First Name</th><th>Phone #</th><th>Email</th><th>Address</th><th>Edit</th></tr>
+				<tr>
+				    <th><span class='pointer' ng-click='sort("lastName")'>Last Name<span>
+				        <span ng-show="sortField=='lastName' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+				        <span ng-show="sortField=='lastName' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+				        </th>
+				    <th><span class='pointer' ng-click='sort("firstName")'>First Name<span>
+				        <span ng-show="sortField=='firstName' && !sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+				        <span ng-show="sortField=='firstName' && sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+				        </th>
+				    <th>Phone #</th>
+				    <th>Email</th>
+				    <th>Address</th>
+				    <th>Edit</th>
+				</tr>
 			<thead>
 			<tbody>
-				<tr ng-repeat='emp in employees track by $index'>
+				<tr ng-repeat='emp in employees | orderBy:sortField:sortReverse track by $index'>
 					<td>{{emp.lastName}}</td>
 					<td>{{emp.firstName}}</td>
 					<td>{{emp.phoneNumber}}</td>
