@@ -31,6 +31,7 @@ staffingApp.controller('EmployeeController', ['$scope', '$window', 'EmployeeServ
 	}
 	
 	$scope.employee = EmployeeSvc.getEditingEmployee();
+	$scope.filteredEmployees = [];
 	$scope.employees = [];
 	EmployeeSvc.getEmployees().then(function (employees) {
 		$scope.employees = employees.data;
@@ -58,6 +59,27 @@ staffingApp.controller('EmployeeController', ['$scope', '$window', 'EmployeeServ
 			}
 		}
 	});
+	
+	function doObjectFieldsContainSearchTerm(obj, fields, searchTerm) {
+		var retVal = false;
+		for(var i = 0; i < fields.length && !retVal; i++) {
+			if(typeof obj[fields[i]] == "string") {
+				retVal |= obj[fields[i]].toLowerCase().indexOf(searchTerm) >= 0;
+			} else {
+				var subObj = obj[fields[i]];
+				retVal |= doObjectFieldsContainSearchTerm(subObj, Object.keys(subObj), searchTerm);
+			}
+		}
+		
+		return retVal
+	}
+	
+	$scope.getFilter = function (searchTerm, fields) {
+		searchTerm = (searchTerm || "").toLowerCase();
+		return function (emp) {
+			return doObjectFieldsContainSearchTerm(emp, fields, searchTerm);
+		}
+	};
 	
 	$scope.cancelEdit = function () {
 		EmployeeSvc.setEditingEmployee({});
